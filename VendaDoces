@@ -1,0 +1,68 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class VendaDoces {
+
+    private static final double PRECO_BRIGADEIRO = 2.00;
+    private static final double PRECO_COOKIE = 1.50;
+    private static final double PRECO_PUDIM = 3.00;
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Venda de Doces");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        // Painel com GridLayout para entrada de quantidades
+        JPanel painelEntrada = new JPanel(new GridLayout(4, 2)); // 4 linhas e 2 colunas
+
+        // Componentes do painel
+        JLabel lblBrigadeiro = new JLabel("Quantidade de Brigadeiro:");
+        JTextField txtBrigadeiro = new JTextField();
+        JLabel lblCookie = new JLabel("Quantidade de Cookie:");
+        JTextField txtCookie = new JTextField();
+        JLabel lblPudim = new JLabel("Quantidade de Pudim:");
+        JTextField txtPudim = new JTextField();
+
+        // Adicionando componentes ao painelEntrada usando GridLayout
+        painelEntrada.add(lblBrigadeiro);
+        painelEntrada.add(txtBrigadeiro);
+        painelEntrada.add(lblCookie);
+        painelEntrada.add(txtCookie);
+        painelEntrada.add(lblPudim);
+        painelEntrada.add(txtPudim);
+
+        // Botão para calcular o valor total
+        JButton btnCalcular = new JButton("Calcular Total");
+        JLabel lblTotal = new JLabel("Total: R$ 0.00");
+
+        // Adiciona o painel e o botão ao frame
+        frame.add(painelEntrada, BorderLayout.CENTER); // Adiciona o painel de entrada na posição CENTER
+        frame.add(btnCalcular, BorderLayout.SOUTH); // Adiciona o botão na posição SOUTH
+        frame.add(lblTotal, BorderLayout.NORTH); // Adiciona o rótulo de total na posição NORTH
+
+        // Ação para calcular o total
+        btnCalcular.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int quantidadeBrigadeiro = Integer.parseInt(txtBrigadeiro.getText());
+                    int quantidadeCookie = Integer.parseInt(txtCookie.getText());
+                    int quantidadePudim = Integer.parseInt(txtPudim.getText());
+
+                    double total = (quantidadeBrigadeiro * PRECO_BRIGADEIRO)
+                                 + (quantidadeCookie * PRECO_COOKIE)
+                                 + (quantidadePudim * PRECO_PUDIM);
+
+                    lblTotal.setText(String.format("Total: R$ %.2f", total));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, insira números válidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        frame.setSize(300, 200);
+        frame.setVisible(true);
+    }
+}
